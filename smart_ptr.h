@@ -19,6 +19,7 @@ class smart_ptr {
 
   T& operator*() const { return *ptr; }
   T* operator(->) const { return ptr_; }
+  // To do
   operator bool() const { return ptr_; }
 
  private:
