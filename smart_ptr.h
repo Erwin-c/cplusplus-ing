@@ -14,7 +14,9 @@ template <typename T>
 class smart_ptr {
  public:
   explicit smart_ptr(T* ptr = nullptr) : ptr_(ptr) {}
-  smart_ptr(smart_ptr& other) { ptr_ = other.release(); }
+  // smart_ptr(smart_ptr& other) { ptr_ = other.release(); }
+  // To do
+  smart_ptr(smart_ptr&& other) { ptr_ = other.release(); }
   ~smart_ptr() { delete ptr_; }
 
   T* get() const { return ptr_; }
@@ -24,8 +26,13 @@ class smart_ptr {
   // To do
   operator bool() const { return ptr_; }
 
-  smart_ptr& operator=(smart_ptr& rhs) {
-    smart_ptr(rhs).swap(*this);
+  // smart_ptr& operator=(smart_ptr& rhs) {
+    // smart_ptr(rhs).swap(*this);
+    // return *this;
+  // }
+
+  smart_ptr& operator=(smart_ptr rhs) {
+    rhs.swap(*this);
     return *this;
   }
 
