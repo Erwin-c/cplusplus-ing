@@ -13,9 +13,15 @@
 template <typename T>
 class smart_ptr {
  public:
+  // Prohibit implicit conversion between objects
   explicit smart_ptr(T* ptr = nullptr) : ptr_(ptr) {}
+
+  // Copy constructor
   // smart_ptr(smart_ptr& other) { ptr_ = other.release(); }
+
   // To do
+  // Move constructor: If a move constructor is provided but a copy constructor
+  // is not provided explicityly, the latter is automatically disabled.
   smart_ptr(smart_ptr&& other) { ptr_ = other.release(); }
   ~smart_ptr() { delete ptr_; }
 
@@ -26,11 +32,16 @@ class smart_ptr {
   // To do
   operator bool() const { return ptr_; }
 
+  // If you pass it to another pointer, you don't own the object anymore.
+  // Similar to auto_ptr.
   // smart_ptr& operator=(smart_ptr& rhs) {
-    // smart_ptr(rhs).swap(*this);
-    // return *this;
+  // '*this' refers to the new smart_ptr.
+  // smart_ptr(rhs).swap(*this);
+  // return *this;
   // }
 
+  // Argument is constructed by constructor.
+  // Similar to unique_ptr.
   smart_ptr& operator=(smart_ptr rhs) {
     rhs.swap(*this);
     return *this;
@@ -39,15 +50,14 @@ class smart_ptr {
  private:
   T* ptr_;
 
+  // Release ownership of the pointer.
   T* release() {
     T* ptr = ptr_;
     ptr_ = nullptr;
     return ptr;
   }
 
-  void swap(smart_ptr& rhs) {
-    std::swap(ptr_, rhs.ptr_);
-  }
+  void swap(smart_ptr& rhs) { std::swap(ptr_, rhs.ptr_); }
 };
 
 #endif  // SMART_PTR_H_
