@@ -24,7 +24,8 @@ class DemoClass final : public Interface {
 
   // 6 functions:
   // These functions shall be implemented automatically by the complier.
-  // Constructor: Default, Copy, Move. Assignment: Copy, Move.
+  // Constructor: Default(No paramter), Copy, Move.
+  // Assignment: Copy, Move.
   // Destructor:
 
   // 'default': Tell the compiler explicitly to use the default implementation.
@@ -42,6 +43,12 @@ class DemoClass final : public Interface {
   //               One parameter and other parameters with default value.
   // Transform operator functions:
   explicit DemoClass(const string_type& str);
+  // std::string str = "string";
+  // DemoClass demo = str;
+
+  // conversion from ‘std::string’ {aka ‘std::__cxx11::basic_string<char>’} to
+  // non-scalar type ‘DemoClass’ requested.
+
   explicit operator bool();
 
   ~DemoClass() = default;
@@ -63,8 +70,6 @@ class DemoDelegating final {
   DemoDelegating() : DemoDelegating(0) {}
 
   DemoDelegating(const string_type& s) : DemoDelegating(stoi(s)) {}
-
-  int get() { return a; }
 
  private:
   int a;
